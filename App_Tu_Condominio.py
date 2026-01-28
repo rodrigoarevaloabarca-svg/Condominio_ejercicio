@@ -1,12 +1,11 @@
-
 class Departamento:
     uf = 30000
 
     def __init__(self, numero_unidad, propietario, metros_cuadrados, deuda_uf=0):
         self.numero_unidad = numero_unidad #Publico
         self.propietario = propietario #Publico
-        self.__metros_cuadrados = metros_cuadrados #Privado
-        self._saldo_gastos_comunes_uf = deuda_uf #Protegido
+        self.__metros_cuadrados = metros_cuadrados #Protegido
+        self.__saldo_gastos_comunes_uf = deuda_uf #Privado
 
     @classmethod
     def cambiar_valor_uf(cls, nuevo_valor):
@@ -15,17 +14,17 @@ class Departamento:
 
     #Getter uso interno calcular
     def obtener_deuda_pesos(self):
-        return self._saldo_gastos_comunes_uf * self.uf
+        return self.__saldo_gastos_comunes_uf * self.uf
 
     #Setter
     # Agregada validacion por pagos superiores a la deuda
     def pagar_gastos(self, monto_pesos):
         abono_uf = monto_pesos / self.uf
-        if monto_pesos > 0 and self._saldo_gastos_comunes_uf > abono_uf :
-            self._saldo_gastos_comunes_uf -= abono_uf
+        if monto_pesos > 0 and self.__saldo_gastos_comunes_uf > abono_uf :
+            self.__saldo_gastos_comunes_uf -= abono_uf
             print(f"Pago de ${monto_pesos:,} abonado ({abono_uf}UF) al Depto N° {self.numero_unidad}.")
-        elif abono_uf > self._saldo_gastos_comunes_uf:
-            print(f"El monto ingresado ${monto_pesos} equivale a {abono_uf}UF, es superior a la deuda actual {self._saldo_gastos_comunes_uf}UF")
+        elif abono_uf > self.__saldo_gastos_comunes_uf:
+            print(f"El monto ingresado ${monto_pesos} equivale a {abono_uf}UF, es superior a la deuda actual {self.__saldo_gastos_comunes_uf}UF")
         else:
             print(f"Error: El monto a pagar debe ser mayor a 0. Monto abonado ${monto_pesos}")
 
@@ -33,12 +32,14 @@ class Departamento:
     def __str__(self):
         deuda_pesos = self.obtener_deuda_pesos()
         return (f"/ Depto N°: {self.numero_unidad} / Propietario: {self.propietario} / "  
-                f"Deuda: {self._saldo_gastos_comunes_uf:}UF (${deuda_pesos:} CLP)")
+                f"Deuda: {self.__saldo_gastos_comunes_uf:}UF (${deuda_pesos:} CLP)")
 
 class Administracion:
     def __init__(self, nombre_conserje, telefono):
         self.nombre_conserje = nombre_conserje
         self.telefono = telefono
+    def __str__(self):
+        return (f"Administracion :{self.nombre_conserje} / Telefono: {self.telefono}")
 
 class Edificio:
     def __init__(self, nombre, nombre_conserje, telefono_conserje):
@@ -59,7 +60,7 @@ class Edificio:
             # isinstance verifica q sea del tipo cadena texto y este en minuscula y busca por nombre
             elif isinstance(dato, str) and depto.propietario.lower() == dato.lower():
                 return depto
-        return None
+        return (f"Departamento {dato} no encontrado")
 # agregamos datos de acuerdo a estructura
 #creacion de edificio
 edificio = Edificio("BootCamp", "Sam", "+5696532365")
@@ -74,13 +75,14 @@ edificio.agregar_departamento(depto3)
 #Prueba
 ancho = 80
 print("*"* ancho)
-print(f"El valor de la UF es {Departamento.uf}")
+print(f"---El valor de la UF es {Departamento.uf}---")
 print("*"* ancho)
 print("Busqueda Propietarios".center(ancho))
 print("*"* ancho)
 print(edificio.buscar_departamento(1))
 print(edificio.buscar_departamento("juan"))
 print(edificio.buscar_departamento(3))
+print(edificio.buscar_departamento(4))
 print("*"* ancho)
 print("Pagos".center(ancho))
 print("*"* ancho)
