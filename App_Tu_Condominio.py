@@ -18,14 +18,17 @@ class Departamento:
         return self._saldo_gastos_comunes_uf * self.uf
 
     #Setter
-    # agregar verificacion q el monto de la deuda no sea menor a lo pagado
+    # Agregada validacion por pagos superiores a la deuda
     def pagar_gastos(self, monto_pesos):
-        if monto_pesos > 0:
-            abono_uf = monto_pesos / self.uf
+        abono_uf = monto_pesos / self.uf
+        if monto_pesos > 0 and self._saldo_gastos_comunes_uf > abono_uf :
             self._saldo_gastos_comunes_uf -= abono_uf
-            print(f"Pago de ${monto_pesos:,} abonado ({abono_uf}UF) a la unidad {self.numero_unidad}.")
+            print(f"Pago de ${monto_pesos:,} abonado ({abono_uf}UF) al Depto N° {self.numero_unidad}.")
+        elif abono_uf > self._saldo_gastos_comunes_uf:
+            print(f"El monto ingresado ${monto_pesos} equivale a {abono_uf}UF, es superior a la deuda actual {self._saldo_gastos_comunes_uf}UF")
         else:
             print(f"Error: El monto a pagar debe ser mayor a 0. Monto abonado ${monto_pesos}")
+
     #Reporte Legible
     def __str__(self):
         deuda_pesos = self.obtener_deuda_pesos()
@@ -71,6 +74,8 @@ edificio.agregar_departamento(depto3)
 #Prueba
 ancho = 80
 print("*"* ancho)
+print(f"El valor de la UF es {Departamento.uf}")
+print("*"* ancho)
 print("Busqueda Propietarios".center(ancho))
 print("*"* ancho)
 print(edificio.buscar_departamento(1))
@@ -80,7 +85,7 @@ print("*"* ancho)
 print("Pagos".center(ancho))
 print("*"* ancho)
 print("Pago 1")
-depto1.pagar_gastos(60000)
+depto1.pagar_gastos(360000)
 print(depto1)
 print("*"* ancho)
 print("Pago 2")
