@@ -20,7 +20,7 @@ class Departamento:
 
     #Getter uso interno calcular
     def obtener_deuda_pesos(self):
-        return self.__saldo_gastos_comunes_uf * self.uf
+        return round(self.__saldo_gastos_comunes_uf * self.uf)
 
     #Setter
     # Agregada validacion por pagos superiores a la deuda

@@ -52,7 +52,11 @@ def principal():
                     print("[Error] Debe Registrar (Opcion 1) un edificio antes de listar departamentos")
             case "4":
                 if edificio:
-                    dato = int(input("Ingrese el numero de la unidad o el nombre del propietario: "))
+                    dato = input("Ingrese el numero de la unidad o el nombre del propietario: ")
+                    if dato.isdigit():
+                        dato = int(dato)
+                    else:
+                        dato = dato.lower()
                     print(edificio.buscar_departamento(dato))
                 else:
                     print("[Error] Debe Registrar (Opcion 1) un edificio antes de buscar departamentos")
@@ -62,6 +66,8 @@ def principal():
                     dato = input("Ingrese el numero de la unidad o el nombre del propietario: ")
                     if dato.isdigit():
                         dato = int(dato)
+                    else:
+                        dato = dato.lower()
                     depto_objetivo = edificio.buscar_departamento(dato)
                     if depto_objetivo:
                         monto = int(input("Ingrese el monto del pago: "))

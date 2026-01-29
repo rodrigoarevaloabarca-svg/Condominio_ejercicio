@@ -13,11 +13,11 @@ class Edificio:
     def buscar_departamento(self, dato):
         for depto in self.departamentos:
             if isinstance(dato, int) and depto.numero_unidad == dato:#isinstance veifica q sea del tipo numero y busca por numero
-                return depto
+                break
             # isinstance verifica q sea del tipo cadena texto y .lower q este en minuscula y busca por nombre
             elif isinstance(dato, str) and depto.propietario.lower() == dato.lower():
-                return depto
-        return None
+                break
+        return depto
 
     def generar_cobro_mensual_total(self):
         print(f"\n--- Generando Cargos Mensuales para Edificio: {self.nombre} ---")
