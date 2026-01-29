@@ -1,0 +1,45 @@
+1. Clase Departamento
+
+Atributos:
+
++ numero_unidad: Int (Público)
+
++ propietario: String (Público)
+
+# _metros_cuadrados: Int (Protegido)
+
+- __saldo_gastos_comunes_uf: Float (Privado)
+
+~ uf: Int (Atributo de clase/Estático)
+
+Métodos:
+
++ cambiar_valor_uf(nuevo_valor): Método de clase
+
++ generar_gasto_mensual()
+
++ obtener_deuda_pesos()
+
++ pagar_gastos(monto_pesos)
+
+2. Clase Edificio
+Relaciones:
+
+Composición: Con Administracion (Si el edificio desaparece, su administración también).
+
+Agregación: Con Departamento (El edificio contiene una lista de departamentos).
+
+Métodos:
+
++ agregar_departamento(depto)
+
++ buscar_departamento(dato)
+
++ generar_cobro_mensual_total()
+
+3. Clase Administracion
+Atributos:
+
++ nombre_conserje: String
+
++ telefono: String
